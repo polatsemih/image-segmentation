@@ -1,0 +1,4 @@
+U-Net Training Accuracy: 0.8550
+U-Net Test Accuracy: 0.8496
+U-Net Training Time: 992.3909 seconds
+U-Net IoU on Test Data: 0.3729
