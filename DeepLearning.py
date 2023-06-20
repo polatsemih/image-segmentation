@@ -1,6 +1,3 @@
-# Semih Utku Polat
-# Emre Karataş
-
 import os
 import numpy as np
 import matplotlib.pyplot as plt
@@ -138,7 +135,7 @@ train_accuracy, test_accuracy, train_time, segmented_image = semantic_segmentati
 
 unet_IoU_test = calculate_iou(test_mask, segmented_image)
 
-with open('outputs_DL/u_net.txt', "w") as unet_results:
+with open('outputs_DeepLearning/u_net.txt', "w") as unet_results:
     unet_results.write(f"U-Net Training Accuracy: {train_accuracy:.4f}\n")
     unet_results.write(f"U-Net Test Accuracy: {test_accuracy:.4f}\n")
     unet_results.write(f"U-Net Training Time: {train_time:.4f} seconds\n")
@@ -148,7 +145,7 @@ unet_results.close()
 print('\nU-Net COMPLETED...')
 
 segmented_image = Image.fromarray((segmented_image * 255).astype(np.uint8))
-segmented_image.save('images/segmented_image_DL/subject_10.jpg')
+segmented_image.save('images/segmented_image_DeepLearing/subject_10.jpg')
 
 plt.figure(figsize=(12, 8))
 plt.subplot(131)
