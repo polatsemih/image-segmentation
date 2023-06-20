@@ -1,0 +1,4 @@
+LightGBM Train Accuracy: 0.8897
+LightGBM Test Accuracy: 0.9775
+LightGBM Train Time: 26.8245 seconds
+LightGBM IoU on test data: 0.9580

@@ -1,0 +1,4 @@
+AdaBoost Train Accuracy: 0.9070
+AdaBoost Test Accuracy: 0.9550
+AdaBoost Train Time: 54.9274 seconds
+AdaBoost IoU on test data: 0.9051

@@ -1,0 +1,4 @@
+RandomForest Train Accuracy: 1.0000
+RandomForest Test Accuracy: 0.9793
+RandomForest Train Time: 32.5741 seconds
+RandomForest IoU on test data: 0.9616

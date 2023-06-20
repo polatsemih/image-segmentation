@@ -1,0 +1,4 @@
+CatBoost Train Accuracy: 0.9102
+CatBoost Test Accuracy: 0.9652
+CatBoost Train Time: 247.9898 seconds
+CatBoost IoU on test data: 0.2340
