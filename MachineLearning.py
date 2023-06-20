@@ -134,14 +134,14 @@ def train_feature_extraction():
     for number_str in range(1, 10):
         image_path = 'images/train_images/subject_' + str(number_str) + '.jpg'
         labeled_path = 'images/train_masks/subject_' + str(number_str) + '.png'
-        gaborsPath = 'outputs_ML/gabors/subject_' + str(number_str) + '.txt'
+        gaborsPath = 'outputs_MachineLearning/gabors/subject_' + str(number_str) + '.txt'
         features = extract_image_features(image_path, labeled_path, gaborsPath)
         df = pd.concat([df, features], ignore_index = True)
 
-    df.to_csv('outputs_ML/train_features.csv')
+    df.to_csv('outputs_MachineLearning/train_features.csv')
     
     X_train = df.drop(labels = ["Labels"], axis=1)
-    labeled_df = pd.read_csv('outputs_ML/train_features.csv')
+    labeled_df = pd.read_csv('outputs_MachineLearning/train_features.csv')
     Y_train = labeled_df['Labels'].values
 
     return X_train, Y_train
@@ -149,13 +149,13 @@ def train_feature_extraction():
 def test_feature_extraction():
     image_path = 'images/test_image/subject_10.jpg'
     labeled_path = 'images/test_mask/subject_10.png'
-    gaborsPath = 'outputs_ML/gabors/subject_10.txt'
+    gaborsPath = 'outputs_MachineLearning/gabors/subject_10.txt'
     
     features = extract_image_features(image_path, labeled_path, gaborsPath)
-    features.to_csv('outputs_ML/test_features.csv')
+    features.to_csv('outputs_MachineLearning/test_features.csv')
 
     X_test = features.drop(labels = ["Labels"], axis=1)
-    labeled_df = pd.read_csv('outputs_ML/test_features.csv')
+    labeled_df = pd.read_csv('outputs_MachineLearning/test_features.csv')
     Y_test = labeled_df['Labels'].values
 
     return X_test, Y_test
@@ -189,7 +189,7 @@ random_forest_predict_test = random_forest_model.predict(X_test_subset)
 random_forest_accuracy_test = metrics.accuracy_score(Y_test, random_forest_predict_test)
 random_forest_IoU_test = calculate_iou(Y_test, random_forest_predict_test)
 
-with open('outputs_ML/random_forest.txt', "w") as random_forest_results:
+with open('outputs_MachineLearning/random_forest.txt', "w") as random_forest_results:
     random_forest_results.write(f"RandomForest Train Accuracy: {random_forest_accuracy_train:.4f}\n")
     random_forest_results.write(f"RandomForest Test Accuracy: {random_forest_accuracy_test:.4f}\n")
     random_forest_results.write(f"RandomForest Train Time: {rf_time:.4f} seconds\n")
@@ -211,7 +211,7 @@ ada_boost_predict_test = ada_boost_model.predict(X_test_subset)
 ada_boost_accuracy_test = metrics.accuracy_score(Y_test, ada_boost_predict_test)
 ada_boost_IoU_test = calculate_iou(Y_test, ada_boost_predict_test)
 
-with open('outputs_ML/ada_boost.txt', "w") as ada_boost_results:
+with open('outputs_MachineLearning/ada_boost.txt', "w") as ada_boost_results:
     ada_boost_results.write(f"AdaBoost Train Accuracy: {ada_boost_accuracy_train:.4f}\n")
     ada_boost_results.write(f"AdaBoost Test Accuracy: {ada_boost_accuracy_test:.4f}\n")
     ada_boost_results.write(f"AdaBoost Train Time: {ab_time:.4f} seconds\n")
@@ -233,7 +233,7 @@ lightgbm_predict_test = lightgbm_model.predict(X_test_subset)
 lightgbm_accuracy_test = metrics.accuracy_score(Y_test, lightgbm_predict_test)
 lightgbm_IoU_test = calculate_iou(Y_test, lightgbm_predict_test)
 
-with open('outputs_ML/lightgbm.txt', "w") as lightgbm_results:
+with open('outputs_MachineLearning/lightgbm.txt', "w") as lightgbm_results:
     lightgbm_results.write(f"LightGBM Train Accuracy: {lightgbm_accuracy_train:.4f}\n")
     lightgbm_results.write(f"LightGBM Test Accuracy: {lightgbm_accuracy_test:.4f}\n")
     lightgbm_results.write(f"LightGBM Train Time: {lgbm_time:.4f} seconds\n")
@@ -255,7 +255,7 @@ cat_boost_predict_test = cat_boost_model.predict(X_test_subset)
 cat_boost_accuracy_test = metrics.accuracy_score(Y_test, cat_boost_predict_test)
 cat_boost_IoU_test = calculate_iou(Y_test, cat_boost_predict_test)
 
-with open('outputs_ML/cat_boost.txt', "w") as cat_boost_results:
+with open('outputs_MachineLearning/cat_boost.txt', "w") as cat_boost_results:
     cat_boost_results.write(f"CatBoost Train Accuracy: {cat_boost_accuracy_train:.4f}\n")
     cat_boost_results.write(f"CatBoost Test Accuracy: {cat_boost_accuracy_test:.4f}\n")
     cat_boost_results.write(f"CatBoost Train Time: {cat_boost_time:.4f} seconds\n")
@@ -273,7 +273,7 @@ models = {
 best_model = max(models, key=models.get)
 best_accuracy = models[best_model]
 
-# best_model_path = 'outputs_ML/best_model.pkl'
+# best_model_path = 'outputs_MachineLearning/best_model.pkl'
 if best_model == 'RandomForest':
     # pickle.dump(random_forest_model, open(best_model_path, 'wb'))
     prediction = random_forest_predict_test
@@ -291,7 +291,7 @@ elif best_model == 'CatBoost':
     prediction = cat_boost_predict_test
     best_model_name = 'CatBoost'
     
-with open('outputs_ML/best_model.txt',"w") as best_model:
+with open('outputs_MachineLearning/best_model.txt',"w") as best_model:
     best_model.write('Best Model Name: ' + best_model_name + '\n')
     best_model.write(f"Accuracy: {best_accuracy:.4f}")
 best_model.close()
@@ -304,7 +304,7 @@ img = resize_image_with_padding(img, target_size)
 labeled_img = cv2.imread('images/test_mask/subject_10.png')
 labeled_img = cv2.cvtColor(labeled_img, cv2.COLOR_BGR2GRAY)
 labeled_img = resize_image_with_padding(labeled_img, target_size)
-test_segmented_path = 'images/segmented_image_ML/subject_10.png'
+test_segmented_path = 'images/segmented_image_MachineLearning/subject_10.png'
 
 segmented = prediction.reshape(img.shape)
 
